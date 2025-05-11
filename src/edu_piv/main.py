@@ -31,15 +31,15 @@ def main():
     pd.set_option('display.max_columns', None)
     pd.set_option('display.max_colwidth', None)
     pd.set_option('display.width', None)
-    print("\n📊 Vista previa de los datos limpios:")
+    print("\n Vista previa de los datos limpios:")
     print(df.head())
-    print(f"\n📐 Dimensión final: {df.shape}")
-    print(f"🧾 Columnas: {df.columns.tolist()}")
+    print(f"\n Dimensión final: {df.shape}")
+    print(f" Columnas: {df.columns.tolist()}")
 
     # ========== GUARDAR CSV ==========
     csv_path = "src/edu_piv/static/data/meta_history.csv"
     df.to_csv(csv_path, index=False)
-    print(f"\n✅ CSV guardado en: {csv_path}")
+    print(f"\n CSV guardado en: {csv_path}")
 
     # ========== GUARDAR EN BASE SQLITE ==========
     db_path = "src/edu_piv/static/data/meta_data.db"
@@ -51,16 +51,16 @@ def main():
         df_existente['fecha'] = pd.to_datetime(df_existente['fecha'], errors='coerce')
         fechas_existentes = df_existente['fecha'].dt.date.unique()
         df_nuevo = df[~df['fecha'].dt.date.isin(fechas_existentes)]
-        print(f"\n🔁 Filas nuevas a guardar: {df_nuevo.shape[0]}")
+        print(f"\n Filas nuevas a guardar: {df_nuevo.shape[0]}")
     except Exception:
-        print("\nℹ️ La tabla no existe. Se guardarán todos los datos.")
+        print("\nℹ La tabla no existe. Se guardarán todos los datos.")
         df_nuevo = df
 
     if not df_nuevo.empty:
         df_nuevo.to_sql("meta", con=engine, if_exists="append", index=False)
-        print("✅ Nuevas filas guardadas en base de datos.")
+        print(" Nuevas filas guardadas en base de datos.")
     else:
-        print("⚠️ No hay filas nuevas para guardar.")
+        print("No hay filas nuevas para guardar.")
 
 if __name__ == "__main__":
     main()
