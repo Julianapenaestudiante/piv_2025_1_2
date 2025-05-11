@@ -32,34 +32,6 @@ El repositorio está organizado de la siguiente manera:
 └── README.md
 
 
-## Instalación
-
-Para instalar las dependencias y configurar el entorno de desarrollo, sigue los siguientes pasos:
-
-1. Clona el repositorio:
-
-   ```bash
-   git clone https://github.com/Julianapenaestudiante/piv_2025_1_2.git
-   cd piv_2025_1_2
-   
-python -m venv env
-source env/bin/activate  # En Windows: env\Scripts\activate
-
-python setup.py install
-Este comando instalará todas las dependencias necesarias para ejecutar el proyecto.
-
-Uso
-Después de completar la instalación, puedes ejecutar el análisis principal con:
-
-bash
-Copiar
-Editar
-python prueba.py
-Este script descargará y procesará los datos históricos de las acciones de META.
-
-Indicador Financiero Analizado
-El indicador financiero seleccionado son las acciones de Meta Platforms Inc. (símbolo bursátil: META).
-Se analizaron los datos históricos de precios obtenidos de Yahoo Finance para evaluar tendencias y comportamientos relevantes.
 
 
 
