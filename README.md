@@ -9,27 +9,7 @@ utilizando herramientas de análisis de datos en Python.
 Los datos históricos de las acciones de META se obtuvieron de Yahoo Finance:  
 [Historial de precios de META](https://finance.yahoo.com/quote/META/history/?period1=1337347800&period2=1746906104)
 
-## Estructura del Proyecto
 
-El repositorio está organizado de la siguiente manera:
-├── .github/
-│ └── workflows/
-│ └── update_data.yml
-├── src/
-│ └── edu_piv/
-│ ├── static/
-│ │ └── data/
-│ │ ├── historical.db
-│ │ └── historical.csv
-│ ├── collector.py
-│ └── logger.py
-│ └── main.py
-├── docs/
-│ └── report_entrega1.pdf
-├── prueba.py
-├── setup.py
-├── .gitignore
-└── README.md
 
 
 
