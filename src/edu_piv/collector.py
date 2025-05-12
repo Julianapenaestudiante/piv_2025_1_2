@@ -9,7 +9,7 @@ import re
 
 class Collector:
     def __init__(self, logger):
-        self.url = 'https://finance.yahoo.com/quote/META/history/?period1=1337347800&period2=1746906104'
+        self.url = 'https://es.finance.yahoo.com/quote/META/history/'
         self.logger = logger
 
         os.makedirs('src/edu_piv/static/data', exist_ok=True)
