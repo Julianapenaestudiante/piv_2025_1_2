@@ -25,6 +25,37 @@ def main():
         if col in df.columns:
             df[col] = pd.to_numeric(df[col], errors='coerce') / 100  # divide para corregir escala
 
+    # ========== EXTRAER DÍA, MES Y AÑO DE LA FECHA ==========
+    
+    # Añadir columnas de día, mes (en número) y año
+    df['dia'] = df['fecha'].dt.day
+    
+    # Crear una columna para el mes en formato texto en español
+    meses = {
+        1: 'Enero',
+        2: 'Febrero',
+        3: 'Marzo',
+        4: 'Abril',
+        5: 'Mayo',
+        6: 'Junio',
+        7: 'Julio',
+        8: 'Agosto',
+        9: 'Septiembre',
+        10: 'Octubre',
+        11: 'Noviembre',
+        12: 'Diciembre'
+    }
+    
+    # Extraer el mes como número y luego convertirlo a texto
+    df['mes_num'] = df['fecha'].dt.month
+    df['mes'] = df['mes_num'].map(meses)
+    
+    # Eliminar la columna temporal de mes_num
+    df.drop('mes_num', axis=1, inplace=True)
+    
+    # Añadir columna de año
+    df['año'] = df['fecha'].dt.year
+
     # ========== MOSTRAR DATOS LIMPIOS ==========
 
     pd.set_option('display.max_columns', None)
@@ -43,10 +74,6 @@ def main():
     csv_path = "src/edu_piv/static/data/meta_history.csv"
     df.to_csv(csv_path, index=False, float_format='%.2f')  # exporta con punto decimal
     print(f"\n CSV guardado en: {csv_path}")
-
+    
 if __name__ == "__main__":
     main()
-
-
-
-
