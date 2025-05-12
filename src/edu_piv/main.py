@@ -36,7 +36,8 @@ def main():
     print(f"\n Dimensión final: {df.shape}")
     print(f" Columnas: {df.columns.tolist()}")
 
-    # ========== GUARDAR CSV ==========
+    # ========== FORMATO DE FECHA Y GUARDADO CSV ==========
+    df['fecha'] = df['fecha'].dt.strftime('%m/%d/%Y')
 
     csv_path = "src/edu_piv/static/data/meta_history.csv"
     df.to_csv(csv_path, index=False)
@@ -44,4 +45,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 

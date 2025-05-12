@@ -1,7 +1,5 @@
 import requests
 import pandas as pd
-import requests
-import pandas as pd
 from bs4 import BeautifulSoup
 from logger import Logger
 import os
@@ -11,7 +9,6 @@ class Collector:
     def __init__(self, logger):
         self.url = 'https://es.finance.yahoo.com/quote/META/history/'
         self.logger = logger
-
         os.makedirs('src/edu_piv/static/data', exist_ok=True)
 
     def collector_data(self):
@@ -41,28 +38,28 @@ class Collector:
 
             df = pd.DataFrame(rows, columns=headerss)
 
-            # Renombrar columnas si se reconocen
-            mapeo_columnas = {}
-            for col in df.columns:
-                c = col.lower()
-                if 'date' in c or 'fecha' in c:
-                    mapeo_columnas[col] = 'fecha'
-                elif 'open' in c or 'abrir' in c:
-                    mapeo_columnas[col] = 'abrir'
-                elif 'high' in c or 'máx' in c:
-                    mapeo_columnas[col] = 'max'
-                elif 'low' in c or 'mín' in c:
-                    mapeo_columnas[col] = 'min'
-                elif 'close' in c and 'adj' not in c:
-                    mapeo_columnas[col] = 'cerrar'
-                elif 'adj' in c:
-                    mapeo_columnas[col] = 'cierre_ajustado'
-                elif 'volume' in c or 'volumen' in c:
-                    mapeo_columnas[col] = 'volumen'
+            # Limpieza de encabezados con texto adicional
+            df.columns = df.columns.str.split('Precio de cierre ajustado').str[0]
+            df.columns = df.columns.str.replace(r'[^\w\s]', '', regex=True).str.strip().str.lower()
 
-            df.rename(columns=mapeo_columnas, inplace=True)
+            # Renombrar columnas
+            df.rename(columns={
+                'fecha': 'fecha',
+                'open': 'abrir',
+                'abrir': 'abrir',
+                'high': 'max',
+                'máx': 'max',
+                'low': 'min',
+                'mín': 'min',
+                'close': 'cerrar',
+                'cerrar': 'cerrar',
+                'adj close': 'cierre_ajustado',
+                'cierre ajustado': 'cierre_ajustado',
+                'volume': 'volumen',
+                'volumen': 'volumen'
+            }, inplace=True)
 
-            # LIMPIEZA DE VALORES CON EXPRESIONES REGULARES
+            # Limpieza de valores numéricos
             columnas_flotantes = ['abrir', 'max', 'min', 'cerrar', 'cierre_ajustado']
             for col in columnas_flotantes:
                 if col in df.columns:
@@ -73,6 +70,11 @@ class Collector:
             if 'volumen' in df.columns:
                 df['volumen'] = df['volumen'].astype(str).apply(lambda x: re.sub(r'[^\d]', '', x))
                 df['volumen'] = pd.to_numeric(df['volumen'], errors='coerce', downcast='integer')
+
+            # Formatear la columna fecha como MM/DD/YYYY
+            if 'fecha' in df.columns:
+                df['fecha'] = pd.to_datetime(df['fecha'], errors='coerce')
+                df['fecha'] = df['fecha'].dt.strftime('%m/%d/%Y')
 
             self.logger.info("Collector", "collector_data", f"Datos obtenidos exitosamente {df.shape}")
             return df
