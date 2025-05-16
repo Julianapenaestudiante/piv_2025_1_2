@@ -74,6 +74,5 @@ def main():
     csv_path = "src/edu_piv/static/data/meta_history.csv"
     df.to_csv(csv_path, index=False, float_format='%.2f')  # exporta con punto decimal
     print(f"\n CSV guardado en: {csv_path}")
-    
 if __name__ == "__main__":
     main()
