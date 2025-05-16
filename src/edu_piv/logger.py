@@ -18,7 +18,7 @@ class Logger:
         if not os.path.exists("logs"):
             os.makedirs("logs")
 
-        self.log_file = f"logs/dolar_analysis_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
+        self.log_file = f"logs/Meta_analysis_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
 
         # Configura el formateador y el handler manualmente
         formatter = logging.Formatter(
@@ -29,7 +29,7 @@ class Logger:
         file_handler = logging.FileHandler(self.log_file)
         file_handler.setFormatter(formatter)
 
-        base_logger = logging.getLogger("DolarAnalysis")
+        base_logger = logging.getLogger("MetaAnalysis")
         base_logger.setLevel(logging.INFO)
         base_logger.addHandler(file_handler)
 
